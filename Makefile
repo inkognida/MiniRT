@@ -3,27 +3,29 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hardella <hardella@student.42.fr>          +#+  +:+       +#+         #
+#    By: yironmak <yironmak@student.21-school.ru    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/06 14:19:06 by hardella          #+#    #+#              #
-#    Updated: 2022/08/06 14:23:06 by hardella         ###   ########.fr        #
+#    Updated: 2022/08/06 21:29:10 by yironmak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = main.c
+HDRS_DIR	= ./src/includes/
 
+SRCS_DIR	= ./src/
 
+SRC 		= main.c figures/sphere.c geometry/vector.c scene/camera.c utils/errors.c \
+			scene/scene.c ray_tracing/trace_ray.c intersections/sphere_intersect.c
 
+SRCS 		= $(addprefix $(SRCS_DIR), $(SRC))
 
-OBJS = $(SRCS:.c=.o)
+OBJS 		= $(SRCS:.c=.o)
 
-NAME = miniRT
+NAME 		= miniRT
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS 		= -Wall -Wextra -Werror
 
 .PHONY: 	clean fclean all re bonus
-
-all:		$(NAME)
 
 .c.o:
 			gcc $(CFLAGS) -c $< -o $@
@@ -31,6 +33,8 @@ all:		$(NAME)
 $(NAME):	$(OBJS)
 			make -C ./MinilibX
 			gcc -o $(NAME) $(OBJS) $(CFLAGS) -lmlx -L./MinilibX -framework OpenGL -framework AppKit
+
+all:		$(NAME)
 
 clean:
 			rm -f $(OBJS)
